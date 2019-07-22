@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, TextInput } from 'react-native';
 
 export default function App() {
-  const [count, setCount] = useState(0);
+  const [item, setItem] = useState(null);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.counter}>{count}</Text>
-      <Button title="Count" onPress={() => setCount(count + 1)} />
-      <Button title="Reset" onPress={() => setCount(0)} />
+      <Text>{item || 'Keine Einträge im Tagebuch'}</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Tagebucheintrag erstellen"
+        returnKeyType="done"
+        onSubmitEditing={event => setItem(event.nativeEvent.text)}
+      />
     </View>
   );
 }
@@ -16,12 +20,11 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'azure',
-    alignItems: 'center',
     justifyContent: 'center',
   },
-  counter: {
-    color: 'orange',
-    fontSize: 180,
+  input: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
   },
 });
