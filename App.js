@@ -1,11 +1,20 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, FlatList } from 'react-native';
+import React, { useState, useRef } from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  FlatList,
+  KeyboardAvoidingView,
+} from 'react-native';
 
 export default function App() {
   const [items, setItems] = useState([]);
+  const inputEl = useRef(null);
 
   const _addItem = text => {
     setItems([...items, { text, date: Date.now().toString() }]);
+    inputEl.current.clear();
   };
 
   let content = <Text>Keine Einträge im Tagebuch</Text>;
@@ -24,12 +33,15 @@ export default function App() {
   return (
     <View style={styles.container}>
       {content}
-      <TextInput
-        style={styles.input}
-        placeholder="Tagebucheintrag erstellen"
-        returnKeyType="done"
-        onSubmitEditing={event => _addItem(event.nativeEvent.text)}
-      />
+      <KeyboardAvoidingView behavior="padding">
+        <TextInput
+          style={styles.input}
+          ref={inputEl}
+          placeholder="Tagebucheintrag erstellen"
+          returnKeyType="done"
+          onSubmitEditing={event => _addItem(event.nativeEvent.text)}
+        />
+      </KeyboardAvoidingView>
     </View>
   );
 }
