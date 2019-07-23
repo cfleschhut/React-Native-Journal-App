@@ -8,28 +8,28 @@ import {
 import JournalItems from './JournalItems';
 
 const journalItems = [
-  {
-    title: '29.7.2017',
-    data: [
-      {
-        text: 'Umgang mit SectionList in React Native gelernt',
-        date: 1,
-      },
-    ],
-  },
-  {
-    title: '28.7.2017',
-    data: [
-      {
-        text: 'Einkauf im Supermarkt',
-        date: 2,
-      },
-      {
-        text: 'Wochenendausflug geplant',
-        date: 3,
-      },
-    ],
-  },
+  // {
+  //   title: '29.7.2017',
+  //   data: [
+  //     {
+  //       text: 'Umgang mit SectionList in React Native gelernt',
+  //       date: 1,
+  //     },
+  //   ],
+  // },
+  // {
+  //   title: '28.7.2017',
+  //   data: [
+  //     {
+  //       text: 'Einkauf im Supermarkt',
+  //       date: 2,
+  //     },
+  //     {
+  //       text: 'Wochenendausflug geplant',
+  //       date: 3,
+  //     },
+  //   ],
+  // },
 ];
 
 export default function App() {
@@ -77,7 +77,6 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
   },
   input: {
     height: 40,

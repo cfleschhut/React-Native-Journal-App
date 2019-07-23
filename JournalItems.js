@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   StyleSheet,
+  View,
   Text,
   SectionList,
   Platform,
@@ -13,7 +14,11 @@ const TouchableItem =
 
 export default function JournalItems({ items }) {
   if (items.length === 0) {
-    return <Text>Keine Einträge im Tagebuch</Text>;
+    return (
+      <View style={styles.noItems}>
+        <Text>Keine Einträge im Tagebuch</Text>
+      </View>
+    );
   }
 
   return (
@@ -34,8 +39,13 @@ export default function JournalItems({ items }) {
 }
 
 const styles = StyleSheet.create({
+  noItems: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   list: {
-    marginTop: 24,
+    marginTop: 48,
   },
   listHeader: {
     backgroundColor: 'darkgray',
