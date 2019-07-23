@@ -1,15 +1,11 @@
 import React, { useState, useRef } from 'react';
 import {
   StyleSheet,
-  Text,
   View,
   TextInput,
-  SectionList,
   KeyboardAvoidingView,
-  Platform,
-  TouchableOpacity,
-  TouchableNativeFeedback,
 } from 'react-native';
+import JournalItems from './JournalItems';
 
 const journalItems = [
   {
@@ -62,32 +58,9 @@ export default function App() {
     textInput.current.clear();
   };
 
-  const TouchableItem =
-    Platform.OS === 'ios' ? TouchableOpacity : TouchableNativeFeedback;
-
-  let content = <Text>Keine Einträge im Tagebuch</Text>;
-
-  if (items.length > 0) {
-    content = (
-      <SectionList
-        style={styles.list}
-        sections={items}
-        renderItem={({ item }) => (
-          <TouchableItem>
-            <Text>{item.text}</Text>
-          </TouchableItem>
-        )}
-        renderSectionHeader={({ section }) => (
-          <Text style={styles.listHeader}>{section.title}</Text>
-        )}
-        keyExtractor={item => item.date}
-      />
-    );
-  }
-
   return (
     <View style={styles.container}>
-      {content}
+      <JournalItems items={items} />
       <KeyboardAvoidingView behavior="padding">
         <TextInput
           style={styles.input}
@@ -105,12 +78,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-  },
-  list: {
-    marginTop: 24,
-  },
-  listHeader: {
-    backgroundColor: 'darkgray',
   },
   input: {
     height: 40,
