@@ -6,6 +6,9 @@ import {
   TextInput,
   SectionList,
   KeyboardAvoidingView,
+  Platform,
+  TouchableOpacity,
+  TouchableNativeFeedback,
 } from 'react-native';
 
 const journalItems = [
@@ -59,6 +62,9 @@ export default function App() {
     textInput.current.clear();
   };
 
+  const TouchableItem =
+    Platform.OS === 'ios' ? TouchableOpacity : TouchableNativeFeedback;
+
   let content = <Text>Keine Einträge im Tagebuch</Text>;
 
   if (items.length > 0) {
@@ -66,7 +72,11 @@ export default function App() {
       <SectionList
         style={styles.list}
         sections={items}
-        renderItem={({ item }) => <Text>{item.text}</Text>}
+        renderItem={({ item }) => (
+          <TouchableItem>
+            <Text>{item.text}</Text>
+          </TouchableItem>
+        )}
         renderSectionHeader={({ section }) => (
           <Text style={styles.listHeader}>{section.title}</Text>
         )}
