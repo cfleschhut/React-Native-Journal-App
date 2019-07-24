@@ -8,28 +8,28 @@ import {
 import JournalItems from './JournalItems';
 
 const journalItems = [
-  // {
-  //   title: '29.7.2017',
-  //   data: [
-  //     {
-  //       text: 'Umgang mit SectionList in React Native gelernt',
-  //       date: 1,
-  //     },
-  //   ],
-  // },
-  // {
-  //   title: '28.7.2017',
-  //   data: [
-  //     {
-  //       text: 'Einkauf im Supermarkt',
-  //       date: 2,
-  //     },
-  //     {
-  //       text: 'Wochenendausflug geplant',
-  //       date: 3,
-  //     },
-  //   ],
-  // },
+  {
+    title: '29.7.2017',
+    data: [
+      {
+        text: 'Umgang mit SectionList in React Native gelernt',
+        date: 1,
+      },
+    ],
+  },
+  {
+    title: '28.7.2017',
+    data: [
+      {
+        text: 'Einkauf im Supermarkt',
+        date: 2,
+      },
+      {
+        text: 'Wochenendausflug geplant',
+        date: 3,
+      },
+    ],
+  },
 ];
 
 export default function App() {
@@ -62,13 +62,16 @@ export default function App() {
     <View style={styles.container}>
       <JournalItems items={items} />
       <KeyboardAvoidingView behavior="padding">
-        <TextInput
-          style={styles.input}
-          ref={textInput}
-          placeholder="Tagebucheintrag erstellen"
-          returnKeyType="done"
-          onSubmitEditing={event => _addItem(event.nativeEvent.text)}
-        />
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            ref={textInput}
+            underlineColorAndroid="transparent"
+            placeholder="Tagebucheintrag erstellen"
+            returnKeyType="done"
+            onSubmitEditing={event => _addItem(event.nativeEvent.text)}
+          />
+        </View>
       </KeyboardAvoidingView>
     </View>
   );
@@ -78,9 +81,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  inputContainer: {
+    borderColor: 'lightgray',
+    borderWidth: 1,
+    borderRadius: 4,
+    margin: 8,
+    paddingHorizontal: 8,
+  },
   input: {
     height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
   },
 });
