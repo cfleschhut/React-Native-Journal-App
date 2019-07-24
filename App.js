@@ -5,7 +5,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
 } from 'react-native';
-import JournalItems from './JournalItems';
+import JournalItems from './js/components/JournalItems';
 
 const journalItems = [
   {

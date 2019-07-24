@@ -1,16 +1,6 @@
 import React from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  SectionList,
-  Platform,
-  TouchableOpacity,
-  TouchableNativeFeedback,
-} from 'react-native';
-
-const TouchableItem =
-  Platform.OS === 'ios' ? TouchableOpacity : TouchableNativeFeedback;
+import { StyleSheet, View, Text, SectionList } from 'react-native';
+import JournalItemRow from './JournalItemRow';
 
 export default function JournalItems({ items }) {
   if (items.length === 0) {
@@ -25,11 +15,7 @@ export default function JournalItems({ items }) {
     <SectionList
       style={styles.list}
       sections={items}
-      renderItem={({ item }) => (
-        <TouchableItem>
-          <Text style={styles.listItem}>{item.text}</Text>
-        </TouchableItem>
-      )}
+      renderItem={({ item }) => <JournalItemRow item={item} />}
       renderSectionHeader={({ section }) => (
         <Text style={styles.listHeader}>{section.title}</Text>
       )}
@@ -60,11 +46,6 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: 'hsl(180, 100%, 35%)',
     backgroundColor: 'lightcyan',
-  },
-  listItem: {
-    padding: 16,
-    fontSize: 16,
-    fontWeight: '700',
   },
   listSeparator: {
     height: StyleSheet.hairlineWidth,
