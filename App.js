@@ -13,7 +13,7 @@ const journalItems = [
     data: [
       {
         text: 'Umgang mit SectionList in React Native gelernt',
-        date: 1,
+        date: 1501286400000,
       },
     ],
   },
@@ -22,11 +22,11 @@ const journalItems = [
     data: [
       {
         text: 'Einkauf im Supermarkt',
-        date: 2,
+        date: 1501200060000,
       },
       {
         text: 'Wochenendausflug geplant',
-        date: 3,
+        date: 1501200000000,
       },
     ],
   },
