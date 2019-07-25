@@ -3,6 +3,7 @@ import {
   StyleSheet,
   View,
   Text,
+  Image,
   Platform,
   TouchableOpacity,
   TouchableNativeFeedback,
@@ -18,22 +19,36 @@ export default function JournalItemRow({ item }) {
 
   return (
     <TouchableItem>
-      <View style={styles.row}>
-        <Text style={styles.time}>{time}</Text>
-        <Text style={styles.text} numberOfLines={3}>
-          {item.text}
-        </Text>
+      <View style={styles.container}>
+        <Image source={require('../../foto.png')} style={styles.image} />
+        <View style={styles.itemText}>
+          <Text style={styles.time}>{time}</Text>
+          <Text style={styles.text} numberOfLines={3}>
+            {item.text}
+          </Text>
+        </View>
       </View>
     </TouchableItem>
   );
 }
 
 const styles = StyleSheet.create({
-  row: {
-    padding: 16,
+  container: {
+    flex: 1,
+    flexDirection: 'row',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+  },
+  image: {
+    width: 70,
+    height: 70,
+    marginRight: 8,
+  },
+  itemText: {
+    flex: 1,
   },
   time: {
-    marginBottom: 4,
+    marginBottom: 2,
     color: 'gray',
     fontSize: 12,
     fontWeight: '100',

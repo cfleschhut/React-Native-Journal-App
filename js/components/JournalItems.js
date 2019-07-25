@@ -41,9 +41,9 @@ const styles = StyleSheet.create({
   },
   listHeader: {
     paddingHorizontal: 16,
-    paddingVertical: 10,
-    fontSize: 14,
-    fontWeight: '600',
+    paddingVertical: 8,
+    fontSize: 12,
+    fontWeight: '700',
     color: 'hsl(180, 100%, 35%)',
     backgroundColor: 'lightcyan',
   },
