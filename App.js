@@ -1,11 +1,7 @@
-import React, { useState, useRef } from 'react';
-import {
-  StyleSheet,
-  View,
-  TextInput,
-  KeyboardAvoidingView,
-} from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, View } from 'react-native';
 import JournalItems from './js/components/JournalItems';
+import JournalItemInput from './js/components/JournalItemInput';
 
 const journalItems = [
   {
@@ -13,7 +9,7 @@ const journalItems = [
     data: [
       {
         text: 'Umgang mit SectionList in React Native gelernt',
-        date: 1501286400000,
+        date: 1501322400000,
       },
     ],
   },
@@ -22,11 +18,11 @@ const journalItems = [
     data: [
       {
         text: 'Einkauf im Supermarkt',
-        date: 1501200060000,
+        date: 1501236060000,
       },
       {
         text: 'Wochenendausflug geplant',
-        date: 1501200000000,
+        date: 1501236000000,
       },
     ],
   },
@@ -34,7 +30,6 @@ const journalItems = [
 
 export default function App() {
   const [items, setItems] = useState(journalItems);
-  const textInput = useRef(null);
 
   const _addItem = text => {
     let [head, ...tail] = items;
@@ -55,24 +50,12 @@ export default function App() {
     const newItems = [head, ...tail];
 
     setItems(newItems);
-    textInput.current.clear();
   };
 
   return (
     <View style={styles.container}>
       <JournalItems items={items} />
-      <KeyboardAvoidingView behavior="padding">
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            ref={textInput}
-            underlineColorAndroid="transparent"
-            placeholder="Tagebucheintrag erstellen"
-            returnKeyType="done"
-            onSubmitEditing={event => _addItem(event.nativeEvent.text)}
-          />
-        </View>
-      </KeyboardAvoidingView>
+      <JournalItemInput onSubmit={text => _addItem(text)} />
     </View>
   );
 }
@@ -80,15 +63,5 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  inputContainer: {
-    borderColor: 'lightgray',
-    borderWidth: 1,
-    borderRadius: 4,
-    margin: 8,
-    paddingHorizontal: 8,
-  },
-  input: {
-    height: 40,
   },
 });
