@@ -1,16 +1,6 @@
 import React from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  Image,
-  Platform,
-  TouchableOpacity,
-  TouchableNativeFeedback,
-} from 'react-native';
-
-const TouchableItem =
-  Platform.OS === 'ios' ? TouchableOpacity : TouchableNativeFeedback;
+import { StyleSheet, View, Text, Image } from 'react-native';
+import TouchableItem from './TouchableItem';
 
 export default function JournalItemRow({ item }) {
   const date = new Date(item.date);

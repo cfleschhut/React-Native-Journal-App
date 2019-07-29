@@ -5,6 +5,8 @@ import {
   TextInput,
   KeyboardAvoidingView,
 } from 'react-native';
+import { SimpleLineIcons } from '@expo/vector-icons';
+import TouchableItem from './TouchableItem';
 
 export default function JournalItemInput({ onSubmit }) {
   const textInput = useRef(null);
@@ -17,6 +19,11 @@ export default function JournalItemInput({ onSubmit }) {
   return (
     <KeyboardAvoidingView behavior="padding">
       <View style={styles.inputContainer}>
+        <View style={styles.photoIcon}>
+          <TouchableItem>
+            <SimpleLineIcons name="camera" size={24} color="lightgray" />
+          </TouchableItem>
+        </View>
         <TextInput
           style={styles.input}
           ref={textInput}
@@ -32,13 +39,20 @@ export default function JournalItemInput({ onSubmit }) {
 
 const styles = StyleSheet.create({
   inputContainer: {
-    borderColor: 'lightgray',
-    borderWidth: 1,
-    borderRadius: 4,
     margin: 8,
     paddingHorizontal: 8,
+    flexDirection: 'row',
+    borderWidth: 1,
+    borderColor: 'lightgray',
+    borderRadius: 4,
+  },
+  photoIcon: {
+    alignSelf: 'center',
+    marginLeft: 4,
+    marginRight: 12,
   },
   input: {
+    flex: 1,
     height: 40,
   },
 });
