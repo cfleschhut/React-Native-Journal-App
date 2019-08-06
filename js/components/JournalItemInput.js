@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   StyleSheet,
   View,
@@ -12,16 +12,22 @@ import { SimpleLineIcons } from '@expo/vector-icons';
 import TouchableItem from './TouchableItem';
 
 export default function JournalItemInput({ onSubmit }) {
+  const [photo, setPhoto] = useState('');
   const textInput = useRef(null);
 
   const _launchCamera = async () => {
     const result = await ImagePicker.launchCameraAsync();
-    console.log(result);
+
+    if (!result.cancelled) {
+      setPhoto(result.uri);
+      textInput.current.focus();
+    }
   };
 
   const _submit = text => {
     textInput.current.clear();
-    onSubmit(text);
+    onSubmit(text, photo);
+    setPhoto('');
   };
 
   const _getPermissionAsync = async () => {
@@ -57,6 +63,7 @@ export default function JournalItemInput({ onSubmit }) {
           placeholder="Tagebucheintrag erstellen"
           returnKeyType="done"
           onSubmitEditing={event => _submit(event.nativeEvent.text)}
+          onBlur={() => setPhoto('')}
         />
       </View>
     </KeyboardAvoidingView>

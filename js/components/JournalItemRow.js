@@ -6,11 +6,14 @@ export default function JournalItemRow({ item }) {
   const date = new Date(item.date);
   const minutes = date.getMinutes();
   const time = `${date.getHours()}:${(minutes < 10 ? '0' : '') + minutes}`;
+  const imageSource = item.photo
+    ? { uri: item.photo }
+    : require('../../foto.png');
 
   return (
     <TouchableItem>
       <View style={styles.container}>
-        <Image source={require('../../foto.png')} style={styles.image} />
+        <Image source={imageSource} style={styles.image} />
         <View style={styles.itemText}>
           <Text style={styles.time}>{time}</Text>
           <Text style={styles.text} numberOfLines={3}>

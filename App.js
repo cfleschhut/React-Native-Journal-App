@@ -31,7 +31,7 @@ const journalItems = [
 export default function App() {
   const [items, setItems] = useState(journalItems);
 
-  const _addItem = text => {
+  const _addItem = (text, photo) => {
     let [head, ...tail] = items;
 
     const now = new Date();
@@ -45,7 +45,7 @@ export default function App() {
       tail = items;
     }
 
-    const newItem = { text, date: now.getTime() };
+    const newItem = { text, photo, date: now.getTime() };
     head.data = [newItem, ...head.data];
     const newItems = [head, ...tail];
 
@@ -55,7 +55,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <JournalItems items={items} />
-      <JournalItemInput onSubmit={text => _addItem(text)} />
+      <JournalItemInput onSubmit={(text, photo) => _addItem(text, photo)} />
     </View>
   );
 }
