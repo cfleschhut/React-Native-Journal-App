@@ -1,26 +1,52 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   StyleSheet,
   View,
   TextInput,
   KeyboardAvoidingView,
 } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
+import * as Permissions from 'expo-permissions';
+import Constants from 'expo-constants';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import TouchableItem from './TouchableItem';
 
 export default function JournalItemInput({ onSubmit }) {
   const textInput = useRef(null);
 
+  const _launchCamera = async () => {
+    const result = await ImagePicker.launchCameraAsync();
+    console.log(result);
+  };
+
   const _submit = text => {
     textInput.current.clear();
     onSubmit(text);
   };
 
+  const _getPermissionAsync = async () => {
+    if (Constants.platform.ios) {
+      const { status } = await Permissions.askAsync(
+        Permissions.CAMERA,
+        Permissions.CAMERA_ROLL,
+      );
+      if (status !== 'granted') {
+        alert(
+          'Sorry, we need camera & camera roll permissions to make this work!',
+        );
+      }
+    }
+  };
+
+  useEffect(() => {
+    _getPermissionAsync();
+  });
+
   return (
     <KeyboardAvoidingView behavior="padding">
       <View style={styles.inputContainer}>
         <View style={styles.photoIcon}>
-          <TouchableItem>
+          <TouchableItem onPress={() => _launchCamera()}>
             <SimpleLineIcons name="camera" size={24} color="lightgray" />
           </TouchableItem>
         </View>
