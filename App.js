@@ -61,7 +61,10 @@ export default function App() {
   return (
     <View style={styles.container}>
       <JournalItems items={sections} />
-      <JournalItemInput onSubmit={(text, photo) => _addItem(text, photo)} />
+      <JournalItemInput
+        onSubmit={(text, photo) => _addItem(text, photo)}
+        refresh={() => setItems([])}
+      />
     </View>
   );
 }

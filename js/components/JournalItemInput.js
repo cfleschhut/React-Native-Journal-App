@@ -4,14 +4,16 @@ import {
   View,
   TextInput,
   KeyboardAvoidingView,
+  Alert,
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import TouchableItem from './TouchableItem';
+import Store from '../Store';
 
-export default function JournalItemInput({ onSubmit }) {
+export default function JournalItemInput({ onSubmit, refresh }) {
   const [photo, setPhoto] = useState('');
   const textInput = useRef(null);
 
@@ -44,36 +46,67 @@ export default function JournalItemInput({ onSubmit }) {
     }
   };
 
+  const _deleteItems = () => {
+    Alert.alert(
+      'Einträge löschen',
+      'Sollen wirklich alle Einträge gelöscht werden?',
+      [
+        {
+          text: 'Nein',
+          style: 'cancel',
+        },
+        {
+          text: 'Ja',
+          onPress: async () => {
+            await Store.deleteItems();
+            refresh();
+          },
+        },
+      ],
+    );
+  };
+
   useEffect(() => {
     _getPermissionAsync();
   });
 
   return (
     <KeyboardAvoidingView behavior="padding">
-      <View style={styles.inputContainer}>
-        <View style={styles.photoIcon}>
-          <TouchableItem onPress={() => _launchCamera()}>
-            <SimpleLineIcons name="camera" size={24} color="lightgray" />
-          </TouchableItem>
+      <View style={styles.container}>
+        <View style={styles.inputContainer}>
+          <View style={styles.photoIcon}>
+            <TouchableItem onPress={() => _launchCamera()}>
+              <SimpleLineIcons name="camera" size={24} color="lightgray" />
+            </TouchableItem>
+          </View>
+          <TextInput
+            style={styles.input}
+            ref={textInput}
+            underlineColorAndroid="transparent"
+            placeholder="Tagebucheintrag erstellen"
+            returnKeyType="done"
+            onSubmitEditing={event => _submit(event.nativeEvent.text)}
+            onBlur={() => setPhoto('')}
+          />
         </View>
-        <TextInput
-          style={styles.input}
-          ref={textInput}
-          underlineColorAndroid="transparent"
-          placeholder="Tagebucheintrag erstellen"
-          returnKeyType="done"
-          onSubmitEditing={event => _submit(event.nativeEvent.text)}
-          onBlur={() => setPhoto('')}
-        />
+        <TouchableItem onPress={() => _deleteItems()}>
+          <SimpleLineIcons name="trash" size={24} color="lightgray" />
+        </TouchableItem>
       </View>
     </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 8,
+  },
   inputContainer: {
-    margin: 8,
+    marginRight: 8,
     paddingHorizontal: 8,
+    flex: 1,
     flexDirection: 'row',
     borderWidth: 1,
     borderColor: 'lightgray',
