@@ -15,7 +15,9 @@ export default function JournalItemRow({ item }) {
       <View style={styles.container}>
         <Image source={imageSource} style={styles.image} />
         <View style={styles.itemText}>
-          <Text style={styles.time}>{time}</Text>
+          <Text style={styles.time}>
+            {`${time} ${item.location || ''} ${item.weather || ''}`}
+          </Text>
           <Text style={styles.text} numberOfLines={3}>
             {item.text}
           </Text>

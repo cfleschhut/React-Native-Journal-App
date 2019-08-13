@@ -28,7 +28,7 @@ export default function JournalItemInput({ onSubmit, refresh }) {
 
   const _submit = text => {
     textInput.current.clear();
-    onSubmit(text, photo);
+    _submitWithWeather(text, photo);
     setPhoto('');
   };
 
@@ -64,6 +64,32 @@ export default function JournalItemInput({ onSubmit, refresh }) {
         },
       ],
     );
+  };
+
+  const _getWeather = async () => {
+    let result = { location: null, weather: null };
+    const location = 'Freiburg';
+    const url =
+      'https://www.behrends.io/react-native-buch/Kapitel7/weather.json';
+
+    try {
+      const response = await fetch(url);
+      const weatherJSON = await response.json();
+      const { weather, main } = weatherJSON[location];
+      result = {
+        location,
+        weather: `${Math.floor(main.temp)}°C ${weather[0].description}`,
+      };
+    } catch (error) {
+      console.log('Error fetching weather', error);
+    }
+
+    return result;
+  };
+
+  const _submitWithWeather = async (text, photo) => {
+    const { location, weather } = await _getWeather();
+    onSubmit({ text, photo, location, weather });
   };
 
   useEffect(() => {

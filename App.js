@@ -42,15 +42,9 @@ export default function App() {
     return sections;
   };
 
-  const _addItem = (text, photo) => {
-    const newItems = [
-      {
-        text,
-        photo,
-        date: Date.now(),
-      },
-      ...items,
-    ];
+  const _addItem = item => {
+    item.date = Date.now();
+    const newItems = [item, ...items];
 
     setItems(newItems);
     Store.saveItems(newItems);
@@ -62,7 +56,7 @@ export default function App() {
     <View style={styles.container}>
       <JournalItems items={sections} />
       <JournalItemInput
-        onSubmit={(text, photo) => _addItem(text, photo)}
+        onSubmit={item => _addItem(item)}
         refresh={() => setItems([])}
       />
     </View>
