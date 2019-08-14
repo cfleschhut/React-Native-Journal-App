@@ -7,6 +7,7 @@ import {
   Alert,
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
 import { SimpleLineIcons } from '@expo/vector-icons';
@@ -32,7 +33,7 @@ export default function JournalItemInput({ onSubmit, refresh }) {
     setPhoto('');
   };
 
-  const _getPermissionAsync = async () => {
+  const _getCameraAsync = async () => {
     if (Constants.platform.ios) {
       const { status } = await Permissions.askAsync(
         Permissions.CAMERA,
@@ -68,16 +69,26 @@ export default function JournalItemInput({ onSubmit, refresh }) {
 
   const _getWeather = async () => {
     let result = { location: null, weather: null };
-    const location = 'Freiburg';
-    const url =
-      'https://www.behrends.io/react-native-buch/Kapitel7/weather.json';
 
     try {
+      const { status } = await Permissions.askAsync(Permissions.LOCATION);
+
+      if (status !== 'granted') {
+        console.log('Permission to access location was denied');
+        return result;
+      }
+
+      const position = await Location.getCurrentPositionAsync();
+      const { latitude, longitude } = position.coords;
+
+      const apiKey = '061f24cf3cde2f60644a8240302983f2';
+      const url = `https://api.openweathermap.org/data/2.5/weather?appid=${apiKey}&lat=${latitude}&lon=${longitude}&units=metric&lang=de`;
+
       const response = await fetch(url);
       const weatherJSON = await response.json();
-      const { weather, main } = weatherJSON[location];
+      const { weather, main, name } = weatherJSON;
       result = {
-        location,
+        location: name,
         weather: `${Math.floor(main.temp)}°C ${weather[0].description}`,
       };
     } catch (error) {
@@ -93,7 +104,7 @@ export default function JournalItemInput({ onSubmit, refresh }) {
   };
 
   useEffect(() => {
-    _getPermissionAsync();
+    _getCameraAsync();
   });
 
   return (
