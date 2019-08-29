@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
-import JournalItems from './js/components/JournalItems';
-import JournalItemInput from './js/components/JournalItemInput';
+import AppNavigator from './js/AppNavigator';
+
 import Store from './js/Store';
 
 export default function App() {
@@ -16,32 +15,6 @@ export default function App() {
     _refreshItems();
   }, []);
 
-  const _getSectionTitleFromDate = date => {
-    const dateObj = new Date(date);
-    const day = dateObj.getDate();
-    const month = dateObj.getMonth() + 1;
-    const year = dateObj.getFullYear();
-    return `${day}.${month}.${year}`;
-  };
-
-  const _getItemsWithSections = items => {
-    if (!items.length) return [];
-
-    let sectionTitle = _getSectionTitleFromDate(items[0].date);
-    let sections = [{ title: sectionTitle, data: [] }];
-
-    items.forEach(item => {
-      sectionTitle = _getSectionTitleFromDate(item.date);
-      let lastSection = sections[sections.length - 1];
-
-      lastSection.title !== sectionTitle
-        ? sections.push({ title: sectionTitle, data: [item] })
-        : lastSection.data.push(item);
-    });
-
-    return sections;
-  };
-
   const _addItem = item => {
     item.date = Date.now();
     const newItems = [item, ...items];
@@ -50,21 +23,13 @@ export default function App() {
     Store.saveItems(newItems);
   };
 
-  const sections = _getItemsWithSections(items);
-
   return (
-    <View style={styles.container}>
-      <JournalItems items={sections} />
-      <JournalItemInput
-        onSubmit={item => _addItem(item)}
-        refresh={() => setItems([])}
-      />
-    </View>
+    <AppNavigator
+      screenProps={{
+        items,
+        onSubmit: item => _addItem(item),
+        refresh: _refreshItems,
+      }}
+    />
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
