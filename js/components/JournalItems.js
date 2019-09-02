@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, SectionList } from 'react-native';
 import JournalItemRow from './JournalItemRow';
 
 export default function JournalItems({ items }) {
-  if (items.length === 0) {
+  if (!items.length) {
     return (
       <View style={styles.noItems}>
         <Text style={styles.infoText}>Keine Einträge im Tagebuch</Text>
