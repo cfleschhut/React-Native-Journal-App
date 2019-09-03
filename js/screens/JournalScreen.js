@@ -5,6 +5,7 @@ import JournalItemInput from '../components/JournalItemInput';
 
 export default function JournalScreen({
   screenProps: { items, onSubmit, refresh },
+  navigation: { navigate },
 }) {
   const _getSectionTitleFromDate = date => {
     const dateObj = new Date(date);
@@ -36,7 +37,7 @@ export default function JournalScreen({
 
   return (
     <View style={styles.container}>
-      <JournalItems items={sections} />
+      <JournalItems items={sections} onPress={() => navigate('Item')} />
       <JournalItemInput onSubmit={onSubmit} refresh={refresh} />
     </View>
   );

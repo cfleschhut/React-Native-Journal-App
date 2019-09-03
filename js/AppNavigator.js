@@ -1,17 +1,21 @@
 import React from 'react';
 import { Platform } from 'react-native';
-import { createAppContainer, createBottomTabNavigator } from 'react-navigation';
+import {
+  createAppContainer,
+  createBottomTabNavigator,
+  createStackNavigator,
+} from 'react-navigation';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import JournalScreen from './screens/JournalScreen';
 import PhotosScreen from './screens/PhotosScreen';
 import SettingsScreen from './screens/SettingsScreen';
+import ItemScreen from './screens/ItemScreen';
 
 const Tabs = createBottomTabNavigator(
   {
     Journal: {
       screen: JournalScreen,
       navigationOptions: {
-        title: 'Journal',
         tabBarIcon: ({ tintColor }) => (
           <SimpleLineIcons name="book-open" size={24} color={tintColor} />
         ),
@@ -20,7 +24,6 @@ const Tabs = createBottomTabNavigator(
     Photos: {
       screen: PhotosScreen,
       navigationOptions: {
-        title: 'Photos',
         tabBarIcon: ({ tintColor }) => (
           <SimpleLineIcons name="picture" size={24} color={tintColor} />
         ),
@@ -29,7 +32,6 @@ const Tabs = createBottomTabNavigator(
     Settings: {
       screen: SettingsScreen,
       navigationOptions: {
-        title: 'Settings',
         tabBarIcon: ({ tintColor }) => (
           <SimpleLineIcons name="settings" size={24} color={tintColor} />
         ),
@@ -38,10 +40,10 @@ const Tabs = createBottomTabNavigator(
   },
   {
     tabBarOptions: {
-      activeTintColor: 'deepskyblue',
-      inactiveTintColor: '#929292',
+      activeTintColor: '#000',
+      inactiveTintColor: 'hsl(0, 0%, 65%)',
       style: {
-        backgroundColor: '#f4f4f4',
+        backgroundColor: '#fff',
       },
       labelStyle: {
         ...Platform.select({ android: { marginBottom: 0 } }),
@@ -50,4 +52,14 @@ const Tabs = createBottomTabNavigator(
   },
 );
 
-export default createAppContainer(Tabs);
+const AppNavigator = createStackNavigator({
+  Root: {
+    screen: Tabs,
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.routes[navigation.state.index].routeName,
+    }),
+  },
+  Item: ItemScreen,
+});
+
+export default createAppContainer(AppNavigator);

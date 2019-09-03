@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text, Image } from 'react-native';
 import TouchableItem from './TouchableItem';
 
-export default function JournalItemRow({ item }) {
+export default function JournalItemRow({ item, onPress }) {
   const date = new Date(item.date);
   const minutes = date.getMinutes();
   const time = `${date.getHours()}:${(minutes < 10 ? '0' : '') + minutes}`;
@@ -11,7 +11,7 @@ export default function JournalItemRow({ item }) {
     : require('../../foto.png');
 
   return (
-    <TouchableItem>
+    <TouchableItem onPress={onPress}>
       <View style={styles.container}>
         <Image source={imageSource} style={styles.image} />
         <View style={styles.itemText}>

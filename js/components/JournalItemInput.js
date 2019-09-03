@@ -108,7 +108,7 @@ export default function JournalItemInput({ onSubmit, refresh }) {
   });
 
   return (
-    <KeyboardAvoidingView behavior="padding">
+    <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={64}>
       <View style={styles.container}>
         <View style={styles.inputContainer}>
           <View style={styles.photoIcon}>

@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text, SectionList } from 'react-native';
 import JournalItemRow from './JournalItemRow';
 
-export default function JournalItems({ items }) {
+export default function JournalItems({ items, onPress }) {
   if (!items.length) {
     return (
       <View style={styles.noItems}>
@@ -13,9 +13,10 @@ export default function JournalItems({ items }) {
 
   return (
     <SectionList
-      style={styles.list}
       sections={items}
-      renderItem={({ item }) => <JournalItemRow item={item} />}
+      renderItem={({ item }) => (
+        <JournalItemRow item={item} onPress={onPress} />
+      )}
       renderSectionHeader={({ section }) => (
         <Text style={styles.listHeader}>{section.title}</Text>
       )}
@@ -36,16 +37,12 @@ const styles = StyleSheet.create({
     fontWeight: '300',
     color: 'darkslategray',
   },
-  list: {
-    marginTop: 48,
-  },
   listHeader: {
     paddingHorizontal: 16,
     paddingVertical: 8,
     fontSize: 12,
     fontWeight: '700',
-    color: 'hsl(180, 100%, 35%)',
-    backgroundColor: 'lightcyan',
+    backgroundColor: 'hsl(0, 0%, 95%)',
   },
   listSeparator: {
     height: StyleSheet.hairlineWidth,
