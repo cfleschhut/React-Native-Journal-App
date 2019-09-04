@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -7,8 +7,12 @@ import {
   Image,
   StyleSheet,
 } from 'react-native';
+import TouchableItem from '../components/TouchableItem';
 
-export default function PhotosScreen({ screenProps }) {
+export default function PhotosScreen({
+  screenProps,
+  navigation: { navigate },
+}) {
   const items = screenProps.items.filter(item => item.photo);
 
   if (!items.length) {
@@ -22,12 +26,18 @@ export default function PhotosScreen({ screenProps }) {
   return (
     <ScrollView>
       {items.map(item => (
-        <Image
-          style={styles.photo}
-          source={{ uri: item.photo }}
-          resizeMode="cover"
+        <TouchableItem
           key={item.date}
-        />
+          onPress={() => navigate('Item', { item })}
+        >
+          <View>
+            <Image
+              style={styles.photo}
+              source={{ uri: item.photo }}
+              resizeMode="cover"
+            />
+          </View>
+        </TouchableItem>
       ))}
     </ScrollView>
   );
