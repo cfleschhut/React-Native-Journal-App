@@ -37,7 +37,10 @@ export default function JournalScreen({
 
   return (
     <View style={styles.container}>
-      <JournalItems items={sections} onPress={() => navigate('Item')} />
+      <JournalItems
+        items={sections}
+        onPress={item => navigate('Item', { item })}
+      />
       <JournalItemInput onSubmit={onSubmit} refresh={refresh} />
     </View>
   );

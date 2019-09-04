@@ -3,9 +3,13 @@ import { StyleSheet, View, Text, Image } from 'react-native';
 import TouchableItem from './TouchableItem';
 
 export default function JournalItemRow({ item, onPress }) {
-  const date = new Date(item.date);
-  const minutes = date.getMinutes();
-  const time = `${date.getHours()}:${(minutes < 10 ? '0' : '') + minutes}`;
+  const _formatTime = timestamp => {
+    const date = new Date(timestamp);
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    return `${hours}:${minutes < 10 ? '0' : ''}${minutes}`;
+  };
+
   const imageSource = item.photo
     ? { uri: item.photo }
     : require('../../foto.png');
@@ -16,7 +20,8 @@ export default function JournalItemRow({ item, onPress }) {
         <Image source={imageSource} style={styles.image} />
         <View style={styles.itemText}>
           <Text style={styles.time}>
-            {`${time} ${item.location || ''} ${item.weather || ''}`}
+            {`${_formatTime(item.date)} ${item.location || ''} ${item.weather ||
+              ''}`}
           </Text>
           <Text style={styles.text} numberOfLines={3}>
             {item.text}
@@ -31,13 +36,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
-    paddingHorizontal: 16,
-    paddingVertical: 8,
+    padding: 10,
   },
   image: {
     width: 70,
     height: 70,
-    marginRight: 8,
+    marginRight: 10,
   },
   itemText: {
     flex: 1,

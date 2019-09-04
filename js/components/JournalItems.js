@@ -15,7 +15,7 @@ export default function JournalItems({ items, onPress }) {
     <SectionList
       sections={items}
       renderItem={({ item }) => (
-        <JournalItemRow item={item} onPress={onPress} />
+        <JournalItemRow item={item} onPress={() => onPress(item)} />
       )}
       renderSectionHeader={({ section }) => (
         <Text style={styles.listHeader}>{section.title}</Text>
@@ -38,8 +38,7 @@ const styles = StyleSheet.create({
     color: 'darkslategray',
   },
   listHeader: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
+    padding: 10,
     fontSize: 12,
     fontWeight: '700',
     backgroundColor: 'hsl(0, 0%, 95%)',
