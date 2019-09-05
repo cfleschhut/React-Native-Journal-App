@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform } from 'react-native';
+import { View, Platform } from 'react-native';
 import {
   createAppContainer,
   createBottomTabNavigator,
@@ -10,6 +10,8 @@ import JournalScreen from './screens/JournalScreen';
 import PhotosScreen from './screens/PhotosScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import ItemScreen from './screens/ItemScreen';
+import EditScreen from './screens/EditScreen';
+import TouchableItem from './components/TouchableItem';
 
 const Tabs = createBottomTabNavigator(
   {
@@ -57,9 +59,26 @@ const AppNavigator = createStackNavigator({
     screen: Tabs,
     navigationOptions: ({ navigation }) => ({
       title: navigation.state.routes[navigation.state.index].routeName,
+      headerRight: (
+        <TouchableItem
+          onPress={() => {
+            const newItem = { text: null, photo: null, date: null };
+            navigation.navigate('Edit', { item: newItem });
+          }}
+        >
+          <View>
+            <SimpleLineIcons
+              name="plus"
+              size={24}
+              style={{ padding: 10 }}
+            ></SimpleLineIcons>
+          </View>
+        </TouchableItem>
+      ),
     }),
   },
   Item: ItemScreen,
+  Edit: EditScreen,
 });
 
 export default createAppContainer(AppNavigator);

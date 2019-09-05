@@ -105,7 +105,7 @@ export default function JournalItemInput({ onSubmit, refresh }) {
 
   useEffect(() => {
     _getCameraAsync();
-  });
+  }, []);
 
   return (
     <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={64}>
