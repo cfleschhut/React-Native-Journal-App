@@ -16,8 +16,15 @@ export default function App() {
   }, []);
 
   const _addItem = item => {
-    item.date = Date.now();
-    const newItems = [item, ...items];
+    let newItems;
+
+    if (item.date) {
+      const index = items.findIndex(i => i.date === item.date);
+      newItems = [...items.slice(0, index), item, ...items.slice(index + 1)];
+    } else {
+      item.date = Date.now();
+      newItems = [item, ...items];
+    }
 
     setItems(newItems);
     Store.saveItems(newItems);

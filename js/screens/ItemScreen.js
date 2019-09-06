@@ -1,5 +1,7 @@
 import React from 'react';
-import { Dimensions, Image, ScrollView, StyleSheet, Text } from 'react-native';
+import { Text, Image, Dimensions, ScrollView, StyleSheet } from 'react-native';
+import { SimpleLineIcons } from '@expo/vector-icons';
+import TouchableItem from '../components/TouchableItem';
 
 export default function ItemScreen({ navigation }) {
   const { item } = navigation.state.params;
@@ -20,8 +22,16 @@ export default function ItemScreen({ navigation }) {
   );
 }
 
-ItemScreen.navigationOptions = ({ navigation }) => ({
-  title: navigation.state.params.item.location,
+ItemScreen.navigationOptions = ({ navigation: { state, navigate } }) => ({
+  title: state.params.item.location,
+  headerRight: (
+    <TouchableItem
+      style={styles.headerAction}
+      onPress={() => navigate('Edit', { item: state.params.item })}
+    >
+      <SimpleLineIcons name="wrench" size={24} color="lightgray" />
+    </TouchableItem>
+  ),
 });
 
 const { width } = Dimensions.get('window');
@@ -34,5 +44,8 @@ const styles = StyleSheet.create({
   text: {
     padding: 10,
     fontSize: 16,
+  },
+  headerAction: {
+    padding: 10,
   },
 });

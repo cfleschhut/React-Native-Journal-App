@@ -39,9 +39,7 @@ export default function EditScreen({ screenProps: { onSubmit }, navigation }) {
     textInput.current.focus();
   };
 
-  useEffect(() => {
-    return () => onSubmit(item);
-  });
+  navigation.addListener('didBlur', () => onSubmit(item));
 
   return (
     <View style={styles.container}>
@@ -52,10 +50,7 @@ export default function EditScreen({ screenProps: { onSubmit }, navigation }) {
         multiline={true}
         underlineColorAndroid="transparent"
         placeholder="Tagebucheintrag erstellen"
-        onChangeText={text => {
-          item.text = text;
-          setItem(item);
-        }}
+        onChangeText={text => setItem({ ...item, text })}
         value={item.text}
       />
       <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={64}>
